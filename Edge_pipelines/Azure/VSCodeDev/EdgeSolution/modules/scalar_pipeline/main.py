@@ -40,6 +40,7 @@ SEND_CALLBACKS = 0
 
 # Choose HTTP, AMQP or MQTT as transport protocol.  Currently only MQTT is supported.
 PROTOCOL = IoTHubTransportProvider.MQTT
+CONNECTION_STRING = "HostName=edgebench.azure-devices.net;DeviceId=edgebench;SharedAccessKey=MSXd6z8XfrC/XLgW/c4NbtNM0X50HzeTW8GPrdu8qMQ="
 
 STATS_DIRECTORY = os.getenv('STATS_DIRECTORY', default='/home/pi/AWS/mountedStatistics')
 SLEEP_TIME = os.getenv('SLEEP', default=1)
@@ -167,8 +168,8 @@ class HubManager(object):
             self,
             protocol=IoTHubTransportProvider.MQTT):
         self.client_protocol = protocol
-        self.client = IoTHubModuleClient()
-        self.client.create_from_environment(protocol)
+        self.client = IoTHubModuleClient(CONNECTION_STRING, protocol)
+        # self.client.create_from_environment(protocol)
 
         # set the time until a message times out
         self.client.set_option("messageTimeout", MESSAGE_TIMEOUT)
